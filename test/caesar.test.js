@@ -1,46 +1,86 @@
+const caesar = require("../src/caesar");
 const expect = require("chai").expect;
-const caesarModule = require("../src/caesar");
 
-describe("Caesar", () => {
-  it("should return false if shift equal to 0", () => {
-    const expected = false;
-    const actual = caesarModule("random text", 0);
+describe('caesarModule: caesar', () => {
+  it("should return false if shift not present", () => {
+    let input = "hey";
+    let shift = undefined;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = false;
     expect(actual).to.equal(expected);
   });
-
-  it("should return false if shift value is not defined", () => {
-    const expected = false;
-    const actual = caesarModule("random text");
+  it("should return false if shift = 0", () => {
+    let input = "hey";
+    let shift = 0;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = false;
     expect(actual).to.equal(expected);
   });
-
-  it("should return false if shift value is less than -25", () => {
-    const expected = false;
-    const actual = caesarModule("random text", -26);
+  it("should return false if shift is greater than 25", () => {
+    let input = "hey";
+    let shift = 30;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = false;
     expect(actual).to.equal(expected);
   });
-
-  it("should return false if shift value is greater than 25", () => {
-    const expected = false;
-    const actual = caesarModule("random text", 26);
+  it("should return false if shift less than -25", () => {
+    let input = "hey";
+    let shift = -30;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = false;
     expect(actual).to.equal(expected);
   });
-
-  it("Encoding: should maintain spaces and special symbols", () => {
-    const expected = "bpqa qa i amkzmb umaaiom!";
-    const actual = caesarModule("This is a secret message!", 8);
+  it("should return wklqnixo when given thinkful", () => {
+    let input = "thinkful";
+    let shift = 3;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = "wklqnixo";
     expect(actual).to.equal(expected);
   });
-
-  it("Decoding: should maintain spaces and special symbols", () => {
-    const expected = "this is a secret message!";
-    const actual = caesarModule("BPQA qa I amkzmb umaaiom!", 8, false);
+  it("should decode 'bpqa qa i amkzmb umaaiom!' to 'this is a secret message!'", () => {
+    let input = "bpqa qa i amkzmb umaaiom";
+    let shift = -8;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = "this is a secret message";
     expect(actual).to.equal(expected);
   });
-
-  it("Should treat capital letters as lower case letters", () => {
-    const upperCase = caesarModule("Hello WORLD", 0);
-    const lowerCase = caesarModule("hello world", 0);
-    expect(upperCase).to.equal(lowerCase);
+  it("should return thinkful when given wklqnixo", () => {
+    let input = "wklqnixo";
+    let shift = -3;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = "thinkful";
+    expect(actual).to.equal(expected);
+  });
+  it("spaces and characters should be maintained", () => {
+    let input = "@#$% *&^&*&^ @#$%$#@";
+    let shift = -3;
+    let actual = caesar.caesar(input, shift, (encode = true));
+    let expected = "@#$% *&^&*&^ @#$%$#@";
+    expect(actual).to.equal(expected);
+  });
+  it("should invert shift (decode) if encode is false", () => {
+    let input = "bpqa qa i amkzmb umaaiom";
+    let shift = 8;
+    let encode = false;
+    let actual = caesar.caesar(input, shift, encode);
+    let expected = "this is a secret message";
+    expect(actual).to.equal(expected);
+  });
+  it("should ignore capital letters", () => {
+    let input1 = "A Message";
+    let input2 = "a message";
+    let shift = 8;
+    let encode = true;
+    let actual = caesar.caesar(input1, shift, encode);
+    let expected = caesar.caesar(input2, shift, encode);
+    expect(actual).to.equal(expected);
+  });
+  it("should handle shifts that go past the end of the alphabet.", () => {
+    let input1 = "z";
+    let shift = 3;
+    let encode = true;
+    let actual = caesar.caesar(input1, shift, encode);
+    let expected = "c";
+    expect(actual).to.equal(expected);
   });
 });
