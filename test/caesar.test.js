@@ -1,6 +1,7 @@
 const caesar = require("../src/caesar");
 const expect = require("chai").expect;
 
+// Test if a shift is not present
 describe('caesarModule: caesar', () => {
   it("should return false if shift not present", () => {
     let input = "hey";
@@ -9,6 +10,8 @@ describe('caesarModule: caesar', () => {
     let expected = false;
     expect(actual).to.equal(expected);
   });
+  
+//   If shift is 0
   it("should return false if shift = 0", () => {
     let input = "hey";
     let shift = 0;
@@ -23,6 +26,8 @@ describe('caesarModule: caesar', () => {
     let expected = false;
     expect(actual).to.equal(expected);
   });
+  
+//   if shift is < -25
   it("should return false if shift less than -25", () => {
     let input = "hey";
     let shift = -30;
@@ -37,6 +42,8 @@ describe('caesarModule: caesar', () => {
     let expected = "wklqnixo";
     expect(actual).to.equal(expected);
   });
+  
+//   test if message is decoded properly
   it("should decode 'bpqa qa i amkzmb umaaiom!' to 'this is a secret message!'", () => {
     let input = "bpqa qa i amkzmb umaaiom";
     let shift = -8;
@@ -44,6 +51,8 @@ describe('caesarModule: caesar', () => {
     let expected = "this is a secret message";
     expect(actual).to.equal(expected);
   });
+  
+//   test if message is encoded properly
   it("should return thinkful when given wklqnixo", () => {
     let input = "wklqnixo";
     let shift = -3;
@@ -51,6 +60,8 @@ describe('caesarModule: caesar', () => {
     let expected = "thinkful";
     expect(actual).to.equal(expected);
   });
+  
+//   test if it meets certain criteria
   it("spaces and characters should be maintained", () => {
     let input = "@#$% *&^&*&^ @#$%$#@";
     let shift = -3;
