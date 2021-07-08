@@ -1,12 +1,16 @@
 const polybius = require("../src/polybius");
 const expect = require("chai").expect;
 describe("polybius", () => {
+  
+//   test if correct number is returned for each letter
   it("should return 11 when given a", () => {
     let input = "a";
     let expected = "11";
     let actual = polybius.polybius(input, (encode = true));
     expect(actual).to.equal(expected);
   });
+  
+//   tests if text is translated to numbers properly
   it("should return hello world when given 3251131343 2543241341", () => {
     let input = "3251131343 2543241341";
     let expected = "hello world";
